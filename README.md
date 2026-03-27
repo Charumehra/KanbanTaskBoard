@@ -2,8 +2,6 @@
 
 A high-performance, dark-themed Kanban board built with **React**, **Vite**, and **@dnd-kit**. This project satisfies the "Level 3: Advanced" requirements, featuring full drag-and-drop functionality, real-time filtering, and persistent data storage.
 
-
-
 ## Features
 
 ### 🛠 Core Functionality 
@@ -25,3 +23,10 @@ A high-performance, dark-themed Kanban board built with **React**, **Vite**, and
 - **Icons:** Lucide-React
 - **State Management:** React Hooks (`useState`, `useEffect`)
 
+## 🌐 Live Demo
+[Click here to view the project](https://kanban-task-board-fyzj.vercel.app/)
+
+
+## 📸 Screenshot
+
+![Kanban Task Board Screenshot](./public/screenshot.png)
