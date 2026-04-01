@@ -1,15 +1,24 @@
 import { useDroppable } from "@dnd-kit/core";
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import TaskCard from "./TaskCard";
 import AddTaskForm from "./AddTaskForm";
 
-export default function Column({ id, title, tasks, setTasks, onAdd, dotColor }) {
+export default function Column({
+  id,
+  title,
+  tasks,
+  setTasks,
+  onAdd,
+  dotColor,
+}) {
   const { setNodeRef } = useDroppable({ id });
 
   return (
     <div
       ref={setNodeRef}
-      
       className="flex flex-col w-full h-fit min-h-50 bg-slate-900/40 backdrop-blur-md rounded-3xl border border-white/5 p-6 shadow-xl"
     >
       <div className="flex items-center justify-between mb-8 shrink-0">
@@ -26,21 +35,19 @@ export default function Column({ id, title, tasks, setTasks, onAdd, dotColor }) 
 
       {id === "todo" && <AddTaskForm onAdd={onAdd} />}
 
-      <div className="space-y-4">
-        <SortableContext
-          items={tasks.map((t) => t.id)}
-          strategy={verticalListSortingStrategy}
-        >
-          {tasks.map((task) => (
-            <TaskCard key={task.id} task={task} setTasks={setTasks} />
-          ))}
-        </SortableContext>
-
-        {tasks.length === 0 && (
-          <div className="h-24 border-2 border-dashed border-white/5 rounded-2xl flex items-center justify-center text-slate-600 text-xs italic">
-            Empty Column
-          </div>
-        )}
+      <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+        <div className="flex flex-col gap-4 items-center">
+          {" "}
+          {/* Force center or start alignment */}
+          <SortableContext
+            items={tasks.map((t) => t.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            {tasks.map((task) => (
+              <TaskCard key={task.id} task={task} setTasks={setTasks} />
+            ))}
+          </SortableContext>
+        </div>
       </div>
     </div>
   );
