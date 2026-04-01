@@ -3,9 +3,9 @@ import {
   DndContext,
   closestCorners,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
-  TouchSensor,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import Header from "./components/Header";
@@ -24,18 +24,16 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const sensors = useSensors(
-  useSensor(PointerSensor, {
-    activationConstraint: {
-      distance: 10, 
-    },
-  }),
-  useSensor(TouchSensor, {
-    activationConstraint: {
-      delay: 250,
-      tolerance: 5, 
-    },
-  })
-);
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 10 },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        tolerance: 5,
+      },
+    }),
+  );
 
   useEffect(() => {
     localStorage.setItem("kanban-v3", JSON.stringify(tasks));
@@ -71,45 +69,42 @@ function App() {
   );
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-200 flex flex-col font-sans selection:bg-indigo-500/30">
+    <div className="min-h-screen bg-[#020617] text-slate-200 flex flex-col font-sans">
       <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
-      <main className="flex-1 p-4 md:p-10 overflow-x-auto overflow-y-hidden bg-[#020617] custom-scrollbar">
-  <DndContext
-    sensors={sensors}
-    collisionDetection={closestCorners}
-    onDragEnd={handleDragEnd}
-  >
-    <div className="flex md:grid md:grid-cols-3 gap-6 md:gap-8 h-full max-w-7xl mx-auto items-start md:items-stretch pb-4">
-      {COLUMNS.map((col) => (
-        <div 
-          key={col.id} 
-          className="w-[85vw] min-w-70 md:w-full h-full shrink-0"
+      <main className="flex-1 p-4 md:p-10 overflow-y-auto bg-[#020617] custom-scrollbar">
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCorners}
+          onDragEnd={handleDragEnd}
         >
-          <Column
-            id={col.id}
-            title={col.title}
-            dotColor={col.color}
-            tasks={filteredTasks.filter((t) => t.status === col.id)}
-            setTasks={setTasks}
-            onAdd={(content, priority) =>
-              setTasks([
-                ...tasks,
-                {
-                  id: crypto.randomUUID(),
-                  content,
-                  priority,
-                  status: "todo",
-                },
-              ])
-            }
-          />
-        </div>
-      ))}
-    </div>
-  </DndContext>
-</main>
+          <div className="flex flex-col md:grid md:grid-cols-3 gap-8 h-full max-w-7xl mx-auto items-stretch pb-20">
+            {COLUMNS.map((col) => (
+              <Column
+                key={col.id}
+                id={col.id}
+                title={col.title}
+                dotColor={col.color}
+                tasks={filteredTasks.filter((t) => t.status === col.id)}
+                setTasks={setTasks}
+                onAdd={(content, priority) =>
+                  setTasks([
+                    ...tasks,
+                    {
+                      id: crypto.randomUUID(),
+                      content,
+                      priority,
+                      status: "todo",
+                    },
+                  ])
+                }
+              />
+            ))}
+          </div>
+        </DndContext>
+      </main>
     </div>
   );
 }
+
 export default App;
