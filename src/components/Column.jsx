@@ -19,7 +19,7 @@ export default function Column({
   return (
     <div
       ref={setNodeRef}
-      className="flex flex-col h-full bg-slate-900/40 backdrop-blur-md rounded-3xl border border-white/5 p-6 shadow-xl transition-all hover:border-white/10"
+      className="flex flex-col h-full w-[85vw] md:w-auto shrink-0 bg-slate-900/40 ..."
     >
       <div className="flex items-center justify-between mb-8 shrink-0">
         <div className="flex items-center gap-3">
